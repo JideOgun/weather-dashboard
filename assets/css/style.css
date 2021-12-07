@@ -1,0 +1,19 @@
+.weather-header {
+    border: 1pt solid black;
+}
+
+.container {
+    border: 1pt solid rgb(214, 87, 87);
+    padding: 270px;
+    
+}
+
+.row {
+    border: 1pt solid rgb(78, 197, 41);
+    padding: 20px;
+}
+
+.col {
+    border: 1pt solid rgb(168, 166, 49);
+    padding: 20px;
+}
