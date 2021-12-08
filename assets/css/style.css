@@ -1,5 +1,6 @@
 .weather-header {
-    border: 5pt solid black;
+    border: 2pt solid black;
+    padding: 20px;
 }
 
 .container {

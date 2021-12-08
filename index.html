@@ -11,21 +11,44 @@
 
 
 <body>
-    <div class="weather-header">
+    <div class="weather-header bg-danger d-flex justify-content-center">
         WEATHER DASHBOARD
     </div>
     <div class="container-fluid">
-        <div class="row vw-100 vh-100">
-            <div class="columns  col-3"></div>
-            <div class="columns col-9">
-                <div class="container h-100">
-                    <div class="row h-100">
-                        <div class="columns  col-12"></div>
-                        <div class="columns col-12">  
-                    </div>
+        <div class="row vw-100 vh-100" id="main-container">
+            <div class="columns  col-3" id="search-div">
+                <form class="search-form form-control" id="search-form-id" placeholder="enter city">
+                    <label for="form-input">Search for a City:</label>
+                    <input type="text" id="form-input">
+                    <input type="submit" id="form-input" value ="search">
+                </form> <br><br>
+                <div class="btn-div">
+                <button class="austin-btn btn-primary btn-lg w-100" id="search-btn-id">AUSTIN</button>
+                <button class="new-york-btn btn-primary btn-lg w-100" id="search-btn-id">NEW YORK</button>
+                <button class="dallas-btn btn-primary btn-lg w-100" id="search-btn-id">DALLAS</button>
+                <button class="miami-btn btn-primary btn-lg w-100" id="search-btn-id">MIAMI</button>
+                <button class="la-btn btn-primary btn-lg w-100" id="search-btn-id">LOS ANGELES</button>
+                <button class="orlando-btn btn-primary btn-lg w-100" id="search-btn-id">ORLANDO</button>
+                <button class="denver-btn btn-primary btn-lg w-100" id="search-btn-id">DENVER</button>
+                <button class="houston-btn btn-primary btn-lg w-100" id="search-btn-id">HOUSTON</button>
+                <button class="vegas-btn btn-primary btn-lg w-100" id="search-btn-id">LAS VEGAS</button>
+                <button class="chicago-btn btn-primary btn-lg w-100" id="search-btn-id">CHICAGO</button>
                 </div>
             </div>
-        </div>
+            <div class="columns col-9" id="stats-forecast-div">
+
+                    <div class="stats-div columns  col-12 h-50" id="stats-div"></div>
+                    <div class="forceast-div columns col-12 h-50" id="forecast-div">
+                        <span><h3>5-DAY-FORECAST</h3></span>
+                        <div class="card div d-flex flex-row bd-highlight mb-3 h-50 p-20">
+                            <div class="card border border-danger" style="width: 18rem;">FORECAST</div>
+                            <div class="card border border-danger" style="width: 18rem;">FORECAST</div>
+                            <div class="card border border-danger" style="width: 18rem;">FORECAST</div>
+                            <div class="card border border-danger" style="width: 18rem;">FORECAST</div>
+                            <div class="card border border-danger" style="width: 18rem;">FORECAST</div>
+                       </div>
+                    </div>
+            </div>
     </div>
 </body>
 
