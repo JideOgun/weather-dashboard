@@ -67,7 +67,7 @@ key = key + 1;
 
                     // create a new div, set the textcontext to data.main.temp and append to statsdiv
         var tempValue = document.createElement('h5');
-        tempValue.textContent = 'temp: '+data.main.temp;
+        tempValue.textContent = 'temp: '+data.main.temp+'K';
         statsdiv.append(tempValue);
 
         // create a new div, set the textcontext to data.name and append to statsdiv
@@ -103,25 +103,30 @@ key = key + 1;
         .then(function(resp) {
             return resp.json();
         })
-        .then(function(fivedaydata)
+        .then(function(forecastdata)
         {
-            console.log(fivedaydata);
+            console.log(forecastdata);
 
             $('#card-div-id').empty();
         // create a new div, set the textcontext to data.name and append to card-div
 
         for(var i = 0; i < 5; i++) {
     var forecastInfo = document.createElement('card');
-    forecastInfo.textContent = fivedaydata.list[i].dt_txt;
+    forecastInfo.textContent = forecastdata.list[i].dt_txt;
     carddiv.appendChild(forecastInfo);
+    var icon = forecastdata.list[i].weather[0].icon;
+    console.log(icon);
+    forecastInfo.append(`<img src="http://openweathermap.org/img/wn/${icon}@2x.png">`);
+
+
 var tempVal = document.createElement('p');
-tempVal.textContent = 'Tempererature: '+fivedaydata.list[i].main.temp+'F?';
+tempVal.textContent = 'Temp: '+forecastdata.list[i].main.temp+'K';
 forecastInfo.appendChild(tempVal);
 var windVal = document.createElement('p');
-windVal.textContent = 'Wind Speed: '+fivedaydata.list[i].wind.speed+'mph';
+windVal.textContent = 'Wind: '+forecastdata.list[i].wind.speed+' mph';
 forecastInfo.appendChild(windVal);
 var humVal = document.createElement('p');
-humVal.textContent = 'Humidity: '+fivedaydata.list[i].main.humidity+'%';
+humVal.textContent = 'Humidity: '+forecastdata.list[i].main.humidity+'%';
 forecastInfo.appendChild(humVal);
         }
 
