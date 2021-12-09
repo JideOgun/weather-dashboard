@@ -6,6 +6,7 @@ const time = moment().format('LLL');
 var searchbtn = document.querySelector('.search-btn')
 var citydiv = document.getElementById('city-div')
 var statsdiv = document.getElementById('stats-div')
+var carddiv = document.getElementById('card-div-id');
 
 
 
@@ -14,9 +15,10 @@ for (var i = 0; i < localStorage.length; i++) {
 
     var city = localStorage.getItem(i);
     // console.log(localStorage.getItem("City"));
-    var cityName = $(".city-list");
+    var cityName = document.getElementById('city-list-id')
  var newlist = document.createElement('button');
-    cityName.append(newlist).text(city);
+ newlist.textContent = city;
+    cityName.appendChild(newlist);
 }
 // Key count for local storage 
 var key = 0;
@@ -73,6 +75,13 @@ key = key + 1;
         humValue.textContent = 'Humidity: '+data.main.humidity+'%';
         statsdiv.append(humValue);
 
+   // create a new div, set the textcontext to data.name and append to statsdiv
+   var windValue = document.createElement('h5');
+   windValue.textContent = 'Wind Speed: '+data.wind.speed+'mph';
+   statsdiv.append(windValue);
+
+
+
         var url = 'https://api.openweathermap.org/data/2.5/onecall?lat='+Lat+'&'+'lon='+Lon+'&exclude=hourly,daily&appid=640fe4f6b319bdea19e40e5ba9e99f7e';
         fetch(url)
         .then(function(res) {
@@ -85,12 +94,47 @@ key = key + 1;
     uvValue.textContent = 'UV Index: '+dat.current.uvi;
     statsdiv.appendChild(uvValue);
         })
-      
 
 
 
-      
+
+        var url_link = 'https://api.openweathermap.org/data/2.5/forecast?q='+data.name+'&appid=640fe4f6b319bdea19e40e5ba9e99f7e';
+        fetch(url_link)
+        .then(function(resp) {
+            return resp.json();
+        })
+        .then(function(fivedaydata)
+        {
+            console.log(fivedaydata);
+
+            $('#card-div-id').empty();
+        // create a new div, set the textcontext to data.name and append to card-div
+
+        for(var i = 0; i < 5; i++) {
+    var forecastInfo = document.createElement('card');
+    forecastInfo.textContent = fivedaydata.list[i].dt_txt;
+    carddiv.appendChild(forecastInfo);
+var tempVal = document.createElement('p');
+tempVal.textContent = 'Tempererature: '+fivedaydata.list[i].main.temp+'F?';
+forecastInfo.appendChild(tempVal);
+var windVal = document.createElement('p');
+windVal.textContent = 'Wind Speed: '+fivedaydata.list[i].wind.speed+'mph';
+forecastInfo.appendChild(windVal);
+var humVal = document.createElement('p');
+humVal.textContent = 'Humidity: '+fivedaydata.list[i].main.humidity+'%';
+forecastInfo.appendChild(humVal);
+        }
+
     })
+
+
+
+
+
+})
+
+
+
 }
 
 searchbtn.addEventListener('click', getApi);
