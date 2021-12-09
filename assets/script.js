@@ -116,7 +116,10 @@ key = key + 1;
     carddiv.appendChild(forecastInfo);
     var icon = forecastdata.list[i].weather[0].icon;
     console.log(icon);
-    forecastInfo.append(`<img src="http://openweathermap.org/img/wn/${icon}@2x.png">`);
+    var img = document.createElement("img");
+    img.src =  `http://openweathermap.org/img/wn/${icon}@2x.png`
+    
+    forecastInfo.append(img);
 
 
 var tempVal = document.createElement('p');
