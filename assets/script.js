@@ -164,13 +164,15 @@ btnEl.setAttribute("name", searchFormInputt)
 city.prepend(btnEl);
 console.log(btnEl.textContent);
 btnEl.addEventListener('click', getApi(btnEl.textContent));
-    localStorage.setItem('city', JSON.stringify(citylist));  
-// key = key + 1;  
+
+for( var i = 0; i < citylist.length; i++) {
+ localStorage.setItem('city', JSON.stringify(citylist[i]));
+}
 }
 
 
 var loadSavedData = function() {
-
+    // citycontainer.empty();
 // search history persistence - getting the data
 
     var city = JSON.parse(localStorage.getItem('city'));
@@ -181,9 +183,6 @@ var loadSavedData = function() {
     newlist.textContent = city;
     cityName.prepend(newlist);
     citycontainer.addEventListener('click',getApi(city));
-
-// Key count for local storage 
-var key = 0;
 }
 citycontainer.addEventListener('click',function(e) {
     getApi(e.target.textContent);
