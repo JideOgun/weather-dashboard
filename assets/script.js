@@ -8,45 +8,29 @@ var citydiv = document.getElementById('city-div')
 var statsdiv = document.getElementById('stats-div')
 var carddiv = document.getElementById('card-div-id');
 
+    
+citylist = [];
 
-
-// // search history persistence - getting the data
-for (var i = 0; i < localStorage.length; i++) {
-
-    var city = localStorage.getItem(i);
-    var cityName = document.getElementById('city-list-id')
- var newlist = document.createElement('button');
- newlist.textContent = city;
-    cityName.appendChild(newlist);
-}
-// Key count for local storage 
-var key = 0;
 
 // Retreiving the open weather API url and using json() to parse it
-var getApi = function() {
-    var searchFormInput = document.getElementById('form-input').value;
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q='+searchFormInput+'&appid=640fe4f6b319bdea19e40e5ba9e99f7e';
+var getApi = function(searchFormInput) {
+    var searchFormInput = document.getElementById('form-inputt').value;
+
+    
+
+
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q='+searchFormInput+'&appid=f3f6873cc9976931776edb6b53e29545';
   
     fetch(requestUrl)
     .then(function(response) {
         return response.json();
     })
     .then(function(data) {
-        console.log(data);
+        // console.log(data);
 
         var Lon = data.coord.lon;
         var Lat = data.coord.lat;
 
-    
-// search history persistence - setting the data
-var city = document.getElementById('city-list-id');
-var btnEl = document.createElement('button');
-btnEl.textContent = data.name;
-btnEl.setAttribute("name", data.name)
-city.appendChild(btnEl);
-
-var localStorageVar = localStorage.setItem(key, data.name);
-key = key + 1;
 
 
 // stops elements from appending to container continuously when the search button is clicked by first emptying whatever is in there and generating new data
@@ -75,13 +59,13 @@ statsdiv.append(windValue);
 
 
 
-var url = 'https://api.openweathermap.org/data/2.5/onecall?lat='+Lat+'&'+'lon='+Lon+'&exclude=hourly,daily&appid=640fe4f6b319bdea19e40e5ba9e99f7e';
+var url = 'https://api.openweathermap.org/data/2.5/onecall?lat='+Lat+'&'+'lon='+Lon+'&exclude=hourly,daily&appid=f3f6873cc9976931776edb6b53e29545';
 fetch(url)
 .then(function(res) {
     return res.json();
 })
 .then(function(dat)
-{console.log(dat)
+{
 // create a new div, set the textcontext to data.name and append to statsdiv
 var uvValue = document.createElement('div');
 uvValue.textContent = 'UV Index: '+dat.current.uvi;
@@ -91,14 +75,14 @@ statsdiv.appendChild(uvValue);
 
 
 
-var url_link = 'https://api.openweathermap.org/data/2.5/forecast?q='+data.name+'&appid=640fe4f6b319bdea19e40e5ba9e99f7e';
+var url_link = 'https://api.openweathermap.org/data/2.5/forecast?q='+data.name+'&appid=f3f6873cc9976931776edb6b53e29545';
 fetch(url_link)
 .then(function(resp) {
     return resp.json();
 })
 .then(function(forecastdata)
 {
-    console.log(forecastdata);
+    // console.log(forecastdata);
 
     $('#card-div-id').empty();
 
@@ -114,7 +98,7 @@ day.forEach(function(i) {
 
     // creating the weather icon element and appending it to the forecast container
     var icon = forecastdata.list[i].weather[0].icon;
-    console.log(icon);
+    // console.log(icon);
     var img = document.createElement("img");
     img.src =  `http://openweathermap.org/img/wn/${icon}@2x.png`
     forecastInfo.append(img);
@@ -140,4 +124,76 @@ day.forEach(function(i) {
     });
 });
 }
+
+
+function searchHistory (searchFormInputt) {
+    var searchFormInputt = document.getElementById('form-inputt').value;
+    console.log(searchFormInputt)
+if (searchFormInputt) { 
+    if (citylist.indexOf(searchFormInputt) === -1) {
+citylist.push(searchFormInputt)
+}
+    
+    
+}
+else { 
+    removeIndex = citylist.indexOf(searchFormInputt);
+    citylist.splice(removeIndex, 1)
+}
+// citylist.splice(0, 0, searchFormInputt);
+console.log(citylist);
+saveData();
+}
+
+
+
+
+// search history persistence - setting the data
+var saveData = function() {
+    
+    var searchFormInputt = document.getElementById('form-inputt').value;
+    
+        var city = document.getElementById('city-list-id');
+var btnEl = document.createElement('button');
+btnEl.className = 'newlistbtn';
+btnEl.setAttribute("id", "newlistbtn-id")
+btnEl.textContent = searchFormInputt;
+btnEl.setAttribute("name", searchFormInputt)
+city.prepend(btnEl);
+console.log(btnEl.textContent);
+btnEl.addEventListener('click', getApi);
+  
+   
+  
+
+    localStorage.setItem('city', JSON.stringify(citylist));  
+
+      
+
+// key = key + 1;  
+}
+
+
+var loadSavedData = function() {
+
+// search history persistence - getting the data
+
+    var city = localStorage.getItem('city');
+    var cityName = document.getElementById('city-list-id')
+    var newlist = document.createElement('button');
+    newlist.className = 'newlistbtn';
+    newlist.setAttribute("id", "newlistbtn-id")
+    newlist.textContent = city;
+    cityName.prepend(newlist);
+    newlist.addEventListener('click',getApi);
+
+// Key count for local storage 
+var key = 0;
+}
+
+
+
+loadSavedData();
 searchbtn.addEventListener('click', getApi);
+searchbtn.addEventListener('click', searchHistory);
+

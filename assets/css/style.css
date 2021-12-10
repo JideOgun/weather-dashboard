@@ -1,7 +1,8 @@
 .weather-header {
-    border: 2pt solid black;
-    padding: 20px;
+    
+    padding: 40px;
     color: burlywood;
+    font-size: 50px;
 }
 
 .container {
@@ -14,14 +15,33 @@
 }
 
 .columns {
-    border: 1pt solid rgb(168, 166, 49);
+    /* border: 1pt solid rgb(168, 166, 49); */
     padding: 20px;
 }
 
-.mystyle {
+/* .mystyle {
     border: 1pt solid rgb(168, 166, 49);
-}
+} */
 
 .newcard {
     background-color: chartreuse;
+}
+
+.newlistbtn{
+    border-radius: 12px;
+    transition-duration: 0.4s;
+  color: rgb(172, 25, 25);
+  width: 100%;
+  
+
+}
+
+.newlistbtn:hover {
+    background-color: #adaf4c;
+  color: white;
+}
+
+.city-list {
+    background-color: white;
+   
 }
