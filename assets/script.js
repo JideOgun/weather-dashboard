@@ -7,18 +7,20 @@ var searchbtn = document.querySelector('.search-btn')
 var citydiv = document.getElementById('city-div')
 var statsdiv = document.getElementById('stats-div')
 var carddiv = document.getElementById('card-div-id');
+var citycontainer = document.getElementById('city-list-id');
 
     
 citylist = [];
 
+var searchFormInput = document.getElementById('form-inputt').value;
+console.log(searchFormInput)
+
+
+
 
 // Retreiving the open weather API url and using json() to parse it
 var getApi = function(searchFormInput) {
-    var searchFormInput = document.getElementById('form-inputt').value;
-
     
-
-
     var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q='+searchFormInput+'&appid=f3f6873cc9976931776edb6b53e29545';
   
     fetch(requestUrl)
@@ -161,15 +163,8 @@ btnEl.textContent = searchFormInputt;
 btnEl.setAttribute("name", searchFormInputt)
 city.prepend(btnEl);
 console.log(btnEl.textContent);
-btnEl.addEventListener('click', getApi);
-  
-   
-  
-
+btnEl.addEventListener('click', getApi(btnEl.textContent));
     localStorage.setItem('city', JSON.stringify(citylist));  
-
-      
-
 // key = key + 1;  
 }
 
@@ -178,22 +173,26 @@ var loadSavedData = function() {
 
 // search history persistence - getting the data
 
-    var city = localStorage.getItem('city');
+    var city = JSON.parse(localStorage.getItem('city'));
     var cityName = document.getElementById('city-list-id')
     var newlist = document.createElement('button');
     newlist.className = 'newlistbtn';
     newlist.setAttribute("id", "newlistbtn-id")
     newlist.textContent = city;
     cityName.prepend(newlist);
-    newlist.addEventListener('click',getApi);
+    citycontainer.addEventListener('click',getApi(city));
 
 // Key count for local storage 
 var key = 0;
 }
-
+citycontainer.addEventListener('click',function(e) {
+    getApi(e.target.textContent);
+});
 
 
 loadSavedData();
-searchbtn.addEventListener('click', getApi);
+searchbtn.addEventListener('submit', getApi);
 searchbtn.addEventListener('click', searchHistory);
+
+
 
