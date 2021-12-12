@@ -21,7 +21,7 @@ console.log(searchFormInput)
 // Retreiving the open weather API url and using json() to parse it
 var getApi = function(searchFormInput) {
     
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q='+searchFormInput+'&appid=f3f6873cc9976931776edb6b53e29545';
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q='+searchFormInput+'&units=imperial&appid=f3f6873cc9976931776edb6b53e29545';
   
     fetch(requestUrl)
     .then(function(response) {
@@ -46,7 +46,7 @@ statsdiv.append(cityName);
 
 // create a new div, set the textcontext to data.main.temp and append to statsdiv
 var tempValue = document.createElement('h5');
-tempValue.textContent = 'temp: '+data.main.temp+'K';
+tempValue.textContent = 'Temperature: '+data.main.temp+'F';
 statsdiv.append(tempValue);
 
 // create a new div, set the textcontext to data.name and append to statsdiv
@@ -70,6 +70,11 @@ fetch(url)
 {
 // create a new div, set the textcontext to data.name and append to statsdiv
 var uvValue = document.createElement('div');
+uvValue.className = "uvValue";
+if (dat.current.uvi < 1) {
+    $('.uvValue').addClass('uvValue2')
+}
+else if (dat.current.uvi > 1) {$('.uvValue').addClass('uvValue3')}
 uvValue.textContent = 'UV Index: '+dat.current.uvi;
 statsdiv.appendChild(uvValue);
     })
@@ -175,8 +180,8 @@ var loadSavedData = function() {
     var city = JSON.parse(localStorage.getItem('city'));
     console.log(city);
     
-debugger;
-    if(city = []) {
+
+    if((city === []) || (city === null)) {
         return;
     }
     else {
