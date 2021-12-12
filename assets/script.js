@@ -164,29 +164,42 @@ btnEl.setAttribute("name", searchFormInputt)
 city.prepend(btnEl);
 console.log(btnEl.textContent);
 btnEl.addEventListener('click', getApi(btnEl.textContent));
-
-for( var i = 0; i < citylist.length; i++) {
- localStorage.setItem('city', JSON.stringify(citylist[i]));
-}
+    localStorage.setItem('city', JSON.stringify(citylist));  
+// key = key + 1;  
 }
 
 
 var loadSavedData = function() {
-    // citycontainer.empty();
 // search history persistence - getting the data
 
     var city = JSON.parse(localStorage.getItem('city'));
-    var cityName = document.getElementById('city-list-id')
-    var newlist = document.createElement('button');
-    newlist.className = 'newlistbtn';
-    newlist.setAttribute("id", "newlistbtn-id")
-    newlist.textContent = city;
-    cityName.prepend(newlist);
-    citycontainer.addEventListener('click',getApi(city));
+    console.log(city);
+    
+debugger;
+    if(city = []) {
+        return;
+    }
+    else {
+
+        for(var i = 0; i < city.length; i++) {
+        var cityName = document.getElementById('city-list-id')
+        var newlist = document.createElement('button');
+        newlist.className = 'newlistbtn';
+        newlist.setAttribute("id", "newlistbtn-id")
+        newlist.textContent = city[i];
+        cityName.prepend(newlist);
+        newlist.addEventListener('click',getApi(city));
+    }
+    }
+        
+ 
+
 }
+
 citycontainer.addEventListener('click',function(e) {
     getApi(e.target.textContent);
 });
+
 
 
 loadSavedData();
