@@ -1,22 +1,20 @@
+// getting current date
 let currentDayEl = document.getElementById("currentday")
 const time = moment().format('LLL');
  let currentHour = time;
 
-
+// declairing variables for html elements
 var searchbtn = document.querySelector('.search-btn')
 var citydiv = document.getElementById('city-div')
 var statsdiv = document.getElementById('stats-div')
 var carddiv = document.getElementById('card-div-id');
 var citycontainer = document.getElementById('city-list-id');
 
-    
+  // empty array to put my cities in and eventually store in local storage  
 citylist = [];
 
 var searchFormInput = document.getElementById('form-inputt').value;
 console.log(searchFormInput)
-
-
-
 
 // Retreiving the open weather API url and using json() to parse it
 var getApi = function(searchFormInput) {
@@ -29,11 +27,9 @@ var getApi = function(searchFormInput) {
     })
     .then(function(data) {
         // console.log(data);
-
+// storing lon and lat data from first api in these variables
         var Lon = data.coord.lon;
         var Lat = data.coord.lat;
-
-
 
 // stops elements from appending to container continuously when the search button is clicked by first emptying whatever is in there and generating new data
 $('#stats-div').empty();
@@ -60,7 +56,7 @@ windValue.textContent = 'Wind Speed: '+data.wind.speed+'mph';
 statsdiv.append(windValue);
 
 
-
+// getting the UV index data with a different endpoint and passing the lon and lat obtained from the first api call as a variable
 var url = 'https://api.openweathermap.org/data/2.5/onecall?lat='+Lat+'&'+'lon='+Lon+'&exclude=hourly,daily&appid=f3f6873cc9976931776edb6b53e29545';
 fetch(url)
 .then(function(res) {
@@ -88,7 +84,7 @@ uvValue.append(uvbtn);
     })
 
 
-
+// Five day Forecast data
 
 var url_link = 'https://api.openweathermap.org/data/2.5/forecast?q='+data.name+'&appid=f3f6873cc9976931776edb6b53e29545';
 fetch(url_link)
@@ -97,11 +93,7 @@ fetch(url_link)
 })
 .then(function(forecastdata)
 {
-    // console.log(forecastdata);
-
     $('#card-div-id').empty();
-
-
     // creating an array of days I want to loop over because the api give trhe forecast in 3 hour increments so using a regular for loop will return the wrong data
 var day = [0, 8, 16, 24, 32];
 day.forEach(function(i) {
@@ -147,21 +139,14 @@ function searchHistory (searchFormInputt) {
 if (searchFormInputt) { 
     if (citylist.indexOf(searchFormInputt) === -1) {
 citylist.push(searchFormInputt)
-}
-    
-    
+}   
 }
 else { 
     removeIndex = citylist.indexOf(searchFormInputt);
     citylist.splice(removeIndex, 1)
 }
-// citylist.splice(0, 0, searchFormInputt);
-console.log(citylist);
 saveData();
 }
-
-
-
 
 // search history persistence - setting the data
 var saveData = function() {
@@ -178,7 +163,7 @@ city.prepend(btnEl);
 console.log(btnEl.textContent);
 btnEl.addEventListener('click', getApi(btnEl.textContent));
     localStorage.setItem('city', JSON.stringify(citylist));  
-// key = key + 1;  
+
 }
 
 
@@ -186,9 +171,6 @@ var loadSavedData = function() {
 // search history persistence - getting the data
 
     var city = JSON.parse(localStorage.getItem('city'));
-    console.log(city);
-    
-
     if((city === []) || (city === null)) {
         return;
     }
@@ -204,16 +186,11 @@ var loadSavedData = function() {
         newlist.addEventListener('click',getApi(city));
     }
     }
-        
- 
-
 }
 
 citycontainer.addEventListener('click',function(e) {
     getApi(e.target.textContent);
 });
-
-
 
 loadSavedData();
 searchbtn.addEventListener('submit', getApi);
