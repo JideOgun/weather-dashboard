@@ -47,11 +47,15 @@
 }
 
 .uvValue {
-    background-color: darkred;
+    background-color: rgb(47, 146, 64);
 }
 .uvValue2 {
-    background-color: rgb(32, 85, 146);
+    background-color: rgb(236, 233, 27);
 }
 .uvValue3 {
-    background-color: rgb(35, 185, 55);
+    background-color: rgb(185, 35, 35);
+}
+
+.uvbtn {
+    background-color: rgb(224, 66, 26);
 }

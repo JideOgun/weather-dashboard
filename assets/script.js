@@ -70,13 +70,21 @@ fetch(url)
 {
 // create a new div, set the textcontext to data.name and append to statsdiv
 var uvValue = document.createElement('div');
-uvValue.className = "uvValue";
-if (dat.current.uvi < 1) {
-    $('.uvValue').addClass('uvValue2')
+var uvbtn = document.createElement('button');
+uvbtn.textContent = dat.current.uvi;
+
+// uvValue.className = "uvValue";
+if (dat.current.uvi < 3) {
+   uvbtn.className = "uvValue"
 }
-else if (dat.current.uvi > 1) {$('.uvValue').addClass('uvValue3')}
-uvValue.textContent = 'UV Index: '+dat.current.uvi;
+else if (dat.current.uvi > 3 && dat.current.uvi < 6) {
+    uvbtn.className = "uvValue2"}
+else {
+    uvbtn.className = "uvbtn";
+}
+uvValue.textContent = 'UV Index: ';
 statsdiv.appendChild(uvValue);
+uvValue.append(uvbtn);
     })
 
 
