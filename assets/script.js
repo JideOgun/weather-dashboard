@@ -1,6 +1,6 @@
 // getting current date
 let currentDayEl = document.getElementById("currentday")
-const time = moment().format('LLL');
+const time = moment().format('L');
  let currentHour = time;
 
 // declairing variables for html elements
@@ -40,7 +40,7 @@ $('#stats-div').empty();
 // create a new div, set the textcontext to data.name and append to statsdiv
 var cityName = document.createElement('h2');
 
-cityName.textContent = `${currentHour} `+data.name;
+cityName.textContent = data.name + ` (${currentHour}) `;
 statsdiv.append(cityName);
 
 
