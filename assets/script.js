@@ -17,9 +17,13 @@ var searchFormInput = document.getElementById('form-inputt').value;
 console.log(searchFormInput)
 
 // Retreiving the open weather API url and using json() to parse it
+
 var getApi = function(searchFormInput) {
-    
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q='+searchFormInput+'&units=imperial&appid=f3f6873cc9976931776edb6b53e29545';
+   if(searchFormInput === "") {
+    alert('You need to put in a city')
+}
+else{
+        var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q='+searchFormInput+'&units=imperial&appid=f3f6873cc9976931776edb6b53e29545';
   
     fetch(requestUrl)
     .then(function(response) {
@@ -130,6 +134,8 @@ day.forEach(function(i) {
         });
     });
 });
+} 
+
 }
 
 
@@ -152,8 +158,11 @@ saveData();
 var saveData = function() {
     
     var searchFormInputt = document.getElementById('form-inputt').value;
-    
-        var city = document.getElementById('city-list-id');
+    if(searchFormInputt === "") {
+        return
+    }
+    else {
+                var city = document.getElementById('city-list-id');
 var btnEl = document.createElement('button');
 btnEl.className = 'newlistbtn';
 btnEl.setAttribute("id", "newlistbtn-id")
@@ -163,6 +172,8 @@ city.prepend(btnEl);
 console.log(btnEl.textContent);
 btnEl.addEventListener('click', getApi(btnEl.textContent));
     localStorage.setItem('city', JSON.stringify(citylist));  
+
+    }
 
 }
 
